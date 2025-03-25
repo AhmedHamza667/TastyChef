@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LogInView: View {
     @Environment(\.dismiss) private var dismiss
-    @StateObject var vm = LogInViewModel(authenticationManager: AuthenticationManager())
+    @StateObject var vm = AuthenticationViewModel(authenticationManager: AuthenticationManager())
     var body: some View {
         NavigationStack {
             VStack(spacing: 24) {
@@ -27,17 +27,25 @@ struct LogInView: View {
                         .cornerRadius(12)
                 }
                 
-                Button{
+                Button {
                     vm.logIn()
-                } label:{
-                    Text("Log In")
-                        .fontWeight(.bold)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color("colorPrimary"))
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                } label: {
+                    HStack {
+                        if vm.isLoading {
+                            ProgressView()
+                                .tint(.white)
+                        } else {
+                            Text("Log In")
+                        }
+                    }
+                    .fontWeight(.bold)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color("colorPrimary").opacity(vm.isFormValid ? 1.0 : 0.5))
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
                 }
+                .disabled(!vm.isFormValid || vm.isLoading)
                 
                 HStack(spacing: 4) {
                     Text("Don't have an account?")
@@ -68,6 +76,15 @@ struct LogInView: View {
                     }
                 }
             }
+            .alert("Error", isPresented: $vm.showError) {
+                Button("OK") {
+                    vm.error = nil
+                }
+            } message: {
+                Text(vm.error ?? "An unknown error occurred")
+            }
+            .disabled(vm.isLoading)
+        
         }
     }
 }

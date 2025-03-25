@@ -13,6 +13,10 @@ final class AuthenticationViewModel: ObservableObject{
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var isFormValid = false
+    @Published var isLoading = false
+    @Published var error: String?
+    @Published var showError = false
+
 
     private var authenticationManager: AuthenticationManager
     private var cancellables = Set<AnyCancellable>()
@@ -44,7 +48,7 @@ final class AuthenticationViewModel: ObservableObject{
     }
     
     func createAccount(){
-        guard isValid(email: email, password: password) else {
+        guard isFormValid else {
             print("Email or password is not valid")
             return
         }
@@ -53,31 +57,41 @@ final class AuthenticationViewModel: ObservableObject{
                 let returnedUserData = try await authenticationManager.createUser(email: email, password: password)
                 print("Successfully created user with email: \(returnedUserData)")
                 await MainActor.run {
+                    isLoading = false
                     AuthenticationStateManager.shared.authenticate()
                 }
             } catch{
-                print("Error signing in user: \(error.localizedDescription)")
+                await MainActor.run {
+                    isLoading = false
+                    self.error = (error.localizedDescription)
+                    self.showError = true
+                }
             }
         }
     }
 
-    func logIn(){
-        guard isValid(email: email, password: password) else {
-            print("Email or password is not valid")
-            return
-        }
-        Task{
-            do{
-                let returnedUserData = try await authenticationManager.signIn(email: email, password: password)
-                print("Successfully signed in user with email: \(returnedUserData)")
-                await MainActor.run {
-                    AuthenticationStateManager.shared.authenticate()
+    func logIn() {
+            guard isFormValid else { return }
+            
+            isLoading = true
+            error = nil
+            
+            Task {
+                do {
+                    let returnedUserData = try await authenticationManager.signIn(email: email, password: password)
+                    print("Successfully Logged in user with email: \(returnedUserData)")
+                    await MainActor.run {
+                        isLoading = false
+                        AuthenticationStateManager.shared.authenticate()
+                    }
+                } catch {
+                    await MainActor.run {
+                        isLoading = false
+                        self.error = "Invalid caardentials"
+                        self.showError = true
+                    }
                 }
-            } catch{
-                print("Error logging in user: \(error.localizedDescription)")
             }
         }
-    }
-    
   
 }

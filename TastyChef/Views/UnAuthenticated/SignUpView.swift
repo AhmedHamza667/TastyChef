@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SignUpView: View {
     @Environment(\.dismiss) private var dismiss
-    @StateObject var vm = SignUpViewModel(authenticationManager: AuthenticationManager())
+    @StateObject var vm = AuthenticationViewModel(authenticationManager: AuthenticationManager())
     var body: some View {
         NavigationStack {
             VStack(spacing: 24) {
@@ -28,18 +28,27 @@ struct SignUpView: View {
                         .cornerRadius(12)
                 }
                 
-                Button{
+                Button {
                     vm.createAccount()
-                } label:{
-                    Text("Sign Up")
-                        .fontWeight(.bold)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color("colorPrimary"))
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                } label: {
+                    HStack {
+                        if vm.isLoading {
+                            ProgressView()
+                                .tint(.white)
+                        } else {
+                            Text("Sign Up")
+                        }
+                    }
+                    .fontWeight(.bold)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color("colorPrimary").opacity(vm.isFormValid ? 1.0 : 0.5))
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
                 }
+                .disabled(!vm.isFormValid || vm.isLoading)
                 
+
                 HStack(spacing: 4) {
                     Text("Already have an account?")
                         .foregroundColor(Color(.systemGray))
@@ -69,6 +78,15 @@ struct SignUpView: View {
                     }
                 }
             }
+            .alert("Error", isPresented: $vm.showError) {
+                Button("OK") {
+                    vm.error = nil
+                }
+            } message: {
+                Text(vm.error ?? "An unknown error occurred")
+            }
+            .disabled(vm.isLoading)
+        
         }
     }
 }
