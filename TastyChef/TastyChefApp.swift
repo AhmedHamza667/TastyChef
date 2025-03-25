@@ -7,13 +7,15 @@
 
 import SwiftUI
 import Firebase
+
 @main
 struct TastyChefApp: App {
-    
+    @StateObject private var authStateManager = AuthenticationStateManager.shared
     @UIApplicationDelegateAdaptor(AppDelete.self) var delegate
     var body: some Scene {
         WindowGroup {
             RootView()
+                .environmentObject(authStateManager)
         }
     }
 }

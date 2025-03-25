@@ -38,6 +38,9 @@ final class LogInViewModel: ObservableObject{
             do{
                 let returnedUserData = try await authenticationManager.signIn(email: email, password: password)
                 print("Successfully signed in user with email: \(returnedUserData)")
+                await MainActor.run {
+                    AuthenticationStateManager.shared.authenticate()
+                }
             } catch{
                 print("Error logging in user: \(error.localizedDescription)")
             }

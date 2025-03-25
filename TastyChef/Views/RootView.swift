@@ -8,18 +8,15 @@
 import SwiftUI
 
 struct RootView: View {
-    @StateObject private var vm = RootViewModel()
-    
+    @EnvironmentObject var authStateManager: AuthenticationStateManager
+
     var body: some View {
         Group {
-            if vm.isAuthenticated {
+            if authStateManager.isAuthenticated {
                 TabBarView()
             } else {
                 LandingPage()
             }
-        }
-        .onAppear {
-            vm.checkAuthState()
         }
     }
 }

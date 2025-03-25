@@ -18,6 +18,7 @@ class SettingsViewModel: ObservableObject {
         do {
             try authManager.signOut()
             print("Successfully signed out!")
+            AuthenticationStateManager.shared.unAutenticate()
         } catch {
             print("Error signing out: \(error.localizedDescription)")
         }
