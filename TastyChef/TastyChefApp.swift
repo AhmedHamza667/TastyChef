@@ -13,7 +13,7 @@ struct TastyChefApp: App {
     @UIApplicationDelegateAdaptor(AppDelete.self) var delegate
     var body: some Scene {
         WindowGroup {
-            LandingPage()
+            RootView()
         }
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseAuth
 class AuthenticationManager{
-        
+    static let shared = AuthenticationManager()
     func createUser(email: String, password: String) async throws -> AuthDataModel{
         let authenticatedUser = try await Auth.auth().createUser(withEmail: email, password: password)
         return AuthDataModel(uid: authenticatedUser.user.uid, email: authenticatedUser.user.email)
