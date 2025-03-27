@@ -16,6 +16,7 @@ enum RecipeDetailViewState {
 
 class RecipeDetailViewModel: ObservableObject {
     @Published var recipeDetails: RecipeDetailModel?
+    @Published var nutritionLabelHTML: String?
     @Published var viewState: RecipeDetailViewState = .empty
     var networkManager: NetworkManager!
     
@@ -33,6 +34,19 @@ class RecipeDetailViewModel: ObservableObject {
         } catch {
             print("Error fetching recipe details: \(error.localizedDescription)")
             viewState = .error(error)
+        }
+    }
+    
+    @MainActor
+    func getRecipeNutritionLabel(recipeId: Int) async {
+        do {
+            guard let url = APIEndpoints.recipeNutritionLabel(id: recipeId).createUrl() else { return  }
+            let (data, _) = try await URLSession.shared.data(from: url)
+            if let htmlString = String(data: data, encoding: .utf8) {
+                nutritionLabelHTML = htmlString
+            }
+        } catch {
+            print("Error fetching nutrition label: \(error.localizedDescription)")
         }
     }
 }
