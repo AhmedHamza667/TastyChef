@@ -20,7 +20,6 @@ struct TabBarView: View {
                     }
                 }
                 .tag(0)
-            
             SearchView()
                 .tabItem {
                     VStack {
