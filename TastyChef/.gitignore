@@ -31,5 +31,4 @@ fastlane/screenshots/
 fastlane/test_output/
 
 # Secrets
-Secrets.plist
-GoogleService-Info.plist
+*.plist
