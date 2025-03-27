@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @StateObject private var vm = SettingsViewModel()
+    @StateObject private var favoritesVM = FavoritesViewModel.shared
     @State private var userEmail: String = ""
     @State private var showSignOutAlert = false
 
@@ -28,7 +29,7 @@ struct SettingsView: View {
                         .font(.title2)
                         .fontWeight(.semibold)
                     
-                    Text("15 favorite recipes")
+                    Text("\(favoritesVM.favorites.count) favorite recipes")
                         .foregroundColor(.gray)
                 }
                 .padding(.vertical, 24)
@@ -87,6 +88,7 @@ struct SettingsView: View {
                 } catch {
                     print("Error getting user: \(error)")
                 }
+                favoritesVM.loadFavorites()
             }
         }
     }
