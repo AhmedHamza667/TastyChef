@@ -39,20 +39,31 @@ struct RecipeDetailView: View {
                                     .frame(height: 300)
                                     .clipped()
                                     // check this
-//                                    .overlay {
-//                                        Button(action: {
-//                                            favoritesVM.toggleFavorite(
-//                                                id: Int32(recipe.id),
-//                                                title: recipe.title,
-//                                                image: recipe.image
-//                                            )
-//                                        }) {
-//                                            Image(systemName: favoritesVM.isRecipeFavorited(id: Int32(recipe.id)) ? "heart.fill" : "heart")
-//                                                .foregroundColor(Color("colorPrimary"))
-//                                                .font(.title2)
-//                                        }
-//                                    }
-//                                    
+                                    .overlay(alignment: .bottomTrailing) {
+                                        Button(action: {
+                                            favoritesVM.toggleFavorite(
+                                                id: Int32(recipe.id),
+                                                title: recipe.title,
+                                                image: recipe.image
+                                            )
+                                        }) {
+                                                Image(systemName: favoritesVM.isRecipeFavorited(id: Int32(recipe.id)) ? "heart.fill" : "heart")
+                                                    .font(.system(size: 20, weight: .semibold))
+
+                                            
+                                            .padding(12)
+                                            .background(Color(.systemBackground))
+                                            .foregroundColor(
+                                                favoritesVM.isRecipeFavorited(id: Int32(recipe.id)) ? .red : .primary
+                                            )
+                                            .cornerRadius(12)
+                                            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+
+                                        }
+                                        .padding(.trailing, 30)
+
+                                    }
+                                    
                                     // Custom Back Button
                                     Button(action: {
                                         dismiss()

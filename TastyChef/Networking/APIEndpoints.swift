@@ -13,15 +13,16 @@ import Foundation
 enum APIEndpoints {
     // Base URL
     static let baseURL = "https://api.spoonacular.com"
-    static let apiKey = SecretsManager.shared.getValue(forKey: "API_KEY2") ?? "" // or API_KEY2
+    static let apiKey = SecretsManager.shared.getValue(forKey: "API_KEY") ?? "" // or API_KEY2
 
     // Endpoints
     case recipes
     case recipeDetails(id: Int)
-    case searchRecipes(query: String)
+    case searchRecipes
     case randomRecipes
     case mealPlan
     case recipeNutritionLabel(id: Int)
+    case searchByIngredients
     
     // get the full path
     var path: String {
@@ -38,6 +39,8 @@ enum APIEndpoints {
             return "/recipes/random"
         case .mealPlan:
             return "/mealplanner/generate"
+        case .searchByIngredients:
+            return "/recipes/findByIngredients"
         }
     }
     
@@ -63,8 +66,4 @@ enum APIEndpoints {
         return components.url
     }
     
-    static func testEndpoint() {
-        let testURL = APIEndpoints.recipes.createUrl(with: ["cuisine": "italian", "number" : "10"])
-            print("Test URL: \(testURL?.absoluteString ?? "nil")")
-        }
 }

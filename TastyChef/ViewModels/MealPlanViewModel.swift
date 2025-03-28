@@ -7,7 +7,6 @@
 
 import Foundation
 
-@MainActor
 class MealPlanViewModel: ObservableObject {
     @Published var mealPlan: MealPlan?
     @Published var isLoading = false
@@ -21,6 +20,7 @@ class MealPlanViewModel: ObservableObject {
         self.networkManager = networkManager
     }
     
+    @MainActor
     func generateMealPlan(targetCalories: Int, diet: String?, exclude: String?) async {
         isLoading = true
         showError = false
@@ -55,6 +55,7 @@ class MealPlanViewModel: ObservableObject {
         isLoading = false
     }
     
+    @MainActor
     func clearMealPlan() {
         mealPlan = nil
         showingPlan = false

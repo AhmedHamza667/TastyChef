@@ -47,10 +47,7 @@ struct HomeView: View {
                     
                     // Popular Recipes Section
                     VStack(alignment: .leading, spacing: 16) {
-                        Text("Popular Recipes")
-                            .font(.title3)
-                            .fontWeight(.bold)
-                            .padding(.horizontal)
+                        SortOptionsView(vm: vm)
                         
                         // State-based content
                         switch vm.viewState {
@@ -164,6 +161,7 @@ struct CategoriesView: View {
                             Task {
                                 if category.0 == "Popular"{
                                     await vm.getPopularRecipes()
+                                    await vm.changeSortOption(to: .popularity)
                                 } else if category.0 == "Vegetarian" {
                                     await vm.getVegetarian()
                                     
@@ -190,6 +188,67 @@ struct CategoriesView: View {
                 }
                 .padding(.horizontal)
             }
+        }
+    }
+}
+
+struct SortOptionsView: View {
+    @ObservedObject var vm: HomeViewModel
+    @State private var showOptions = false
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text(recipesSectionTitle)
+                    .font(.title3)
+                    .fontWeight(.bold)
+                
+                Spacer()
+                
+                Menu {
+                    ForEach(SortOption.allCases) { option in
+                        Button(action: {
+                            Task {
+                                await vm.changeSortOption(to: option)
+                            }
+                        }) {
+                            Label(option.displayName, systemImage: option.icon)
+                        }
+                    }
+                } label: {
+                    HStack(spacing: 4) {
+                        Text("Sort by: \(vm.currentSortOption.displayName)")
+                            .font(.footnote)
+                            .foregroundColor(.secondary)
+                        
+                        Image(systemName: "arrow.up.arrow.down")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                    }
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 4)
+                    .background(Color(.systemBackground))
+                    .cornerRadius(8)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                    )
+                }
+            }
+            .padding(.horizontal)
+        }
+    }
+    
+    private var recipesSectionTitle: String {
+        switch vm.currentSortOption {
+        case .popularity:
+            return "Popular Recipes"
+        case .healthiness:
+            return "Healthy Recipes"
+        case .price:
+            return "Budget-Friendly Recipes"
+        case .time:
+            return "Quick & Easy Recipes"
         }
     }
 }

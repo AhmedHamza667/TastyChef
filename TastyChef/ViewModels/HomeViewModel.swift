@@ -15,11 +15,39 @@ enum RecipesViewState{
     case empty
 }
 
+enum SortOption: String, CaseIterable, Identifiable {
+    case popularity = "popularity"
+    case healthiness = "healthiness"
+    case price = "pricePerServing"
+    case time = "time"
+    
+    var id: String { rawValue }
+    
+    var displayName: String {
+        switch self {
+        case .popularity: return "Most Popular"
+        case .healthiness: return "Healthiest"
+        case .price: return "Budget-Friendly"
+        case .time: return "Quick to Make"
+        }
+    }
+    
+    var icon: String {
+        switch self {
+        case .popularity: return "star.fill"
+        case .healthiness: return "heart.fill"
+        case .price: return "dollarsign.circle.fill"
+        case .time: return "clock.fill"
+        }
+    }
+}
+
 class HomeViewModel: ObservableObject {
     @Published var searchText = ""
     @Published var recipes: [Result] = []
     @Published var viewState: RecipesViewState = .empty
     @Published var isLoadingMore = false
+    @Published var currentSortOption: SortOption = .popularity
     
     private var cancellables = Set<AnyCancellable>()
     private var currentParameters: [String: String] = [:]  // Store current parameters
@@ -69,7 +97,7 @@ class HomeViewModel: ObservableObject {
         
         do {
             var finalParameters = parameters
-            finalParameters["sort"] = "popularity"
+            finalParameters["sort"] = currentSortOption.rawValue
             finalParameters["number"] = "\(limit)"
             finalParameters["offset"] = "\(offset)"
             
@@ -117,5 +145,14 @@ class HomeViewModel: ObservableObject {
     
     func getVegetarian() async {
         await fetchRecipes(parameters: ["diet": "vegetarian"])
+    }
+    
+    @MainActor
+    func changeSortOption(to option: SortOption) async {
+        if currentSortOption != option {
+            currentSortOption = option
+            // Reload recipes with the new sort option
+            await fetchRecipes(parameters: currentParameters)
+        }
     }
 }
