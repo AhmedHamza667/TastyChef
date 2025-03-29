@@ -109,9 +109,13 @@ TastyChef is built with:
 
 ## Demo
 
-[![TastyChef Demo](Screenshots/home.png)](https://youtube.com/shorts/Yq3QlaaGj0Q "TastyChef Demo")
-
-*Click the image above to watch the demo video on YouTube*
+<p align="center">
+  <a href="https://youtube.com/shorts/Yq3QlaaGj0Q" target="_blank">
+    <img src="Screenshots/home.png" alt="TastyChef Demo" width="400" height="auto">
+  </a>
+  <br>
+  <em>Click to watch the TastyChef Demo Video</em>
+</p>
 
 ## Technologies Used
 
