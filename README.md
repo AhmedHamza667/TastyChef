@@ -1,7 +1,7 @@
 # TastyChef
 
 <p align="center">
-  <img src="Screenshots/AppIcon.png" width="200" alt="Home Screen">
+  <img src="Screenshots/AppIcon.jpg" width="200" alt="App Icon">
 </p>
 
 TastyChef is an iOS recipe and meal planning application that helps users discover recipes, plan meals, search by ingredients, and manage their cooking preferences.
