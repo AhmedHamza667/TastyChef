@@ -107,13 +107,18 @@ TastyChef is built with:
   <img src="Screenshots/settings.png" width="300" alt="Ingredient Search">
 </p>
 
+## Demo
+
+[![TastyChef Demo](Screenshots/home.png)](https://youtube.com/shorts/Yq3QlaaGj0Q "TastyChef Demo")
+
+*Click the image above to watch the demo video on YouTube*
+
 ## Technologies Used
 
 - **Swift 5.5+**
 - **SwiftUI**
 - **Combine Framework**
 - **Firebase Authentication**
-- **Firebase Storage**
 - **SDWebImage** for image loading and caching
 - **Spoonacular API** for recipe data
 
