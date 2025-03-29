@@ -9,11 +9,6 @@ import SwiftUI
 
 struct MealPlanView: View {
     @StateObject private var viewModel = MealPlanViewModel(networkManager: NetworkManager())
-    @State private var targetCalories: String = ""
-    @State private var selectedDiet: String = "None"
-    @State private var excludeIngredients: String = ""
-    
-    let diets = ["None", "Vegetarian", "Vegan", "Gluten Free", "Ketogenic", "Paleo"]
     
     var body: some View {
         NavigationView {
@@ -46,7 +41,7 @@ struct MealPlanView: View {
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                             
-                            TextField("Enter calories (e.g., 2000)", text: $targetCalories)
+                            TextField("Enter calories (e.g., 2000)", text: $viewModel.targetCalories)
                                 .keyboardType(.numberPad)
                                 .padding()
                                 .background(Color(.systemBackground))
@@ -63,8 +58,8 @@ struct MealPlanView: View {
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                             
-                            Picker("Diet", selection: $selectedDiet) {
-                                ForEach(diets, id: \.self) { diet in
+                            Picker("Diet", selection: $viewModel.selectedDiet) {
+                                ForEach(viewModel.diets, id: \.self) { diet in
                                     Text(diet).tag(diet)
                                 }
                             }
@@ -85,7 +80,7 @@ struct MealPlanView: View {
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                             
-                            TextField("Enter ingredients separated by commas", text: $excludeIngredients)
+                            TextField("Enter ingredients separated by commas", text: $viewModel.excludeIngredients)
                                 .padding()
                                 .background(Color(.systemBackground))
                                 .cornerRadius(8)
@@ -100,7 +95,7 @@ struct MealPlanView: View {
                     Spacer()
                     
                     // Generate Button
-                    Button(action: generatePlan) {
+                    Button(action: viewModel.generatePlan) {
                         HStack {
                             if viewModel.isLoading {
                                 ProgressView()
@@ -113,12 +108,12 @@ struct MealPlanView: View {
                         }
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(targetCalories.isEmpty ? Color.gray : Color.green)
+                        .background(viewModel.isFormValid ? Color.green : Color.gray)
                         .foregroundColor(.white)
                         .cornerRadius(12)
                         .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
                     }
-                    .disabled(viewModel.isLoading || targetCalories.isEmpty)
+                    .disabled(viewModel.isLoading || !viewModel.isFormValid)
                     .padding(.horizontal)
                     .padding(.bottom, 20)
                 }
@@ -135,24 +130,6 @@ struct MealPlanView: View {
                     WeeklyMealPlanView(mealPlan: mealPlan)
                 }
             }
-        }
-    }
-    
-    private func generatePlan() {
-        guard let calories = Int(targetCalories) else { return }
-        
-        let diet = selectedDiet == "None" ? nil : selectedDiet.lowercased()
-        let exclude = excludeIngredients.isEmpty ? nil : excludeIngredients
-            .split(separator: ",")
-            .map { $0.trimmingCharacters(in: .whitespaces) }
-            .joined(separator: ",")
-        
-        Task {
-            await viewModel.generateMealPlan(
-                targetCalories: calories,
-                diet: diet,
-                exclude: exclude
-            )
         }
     }
 }

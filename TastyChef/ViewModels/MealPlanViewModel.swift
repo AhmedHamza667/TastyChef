@@ -13,11 +13,54 @@ class MealPlanViewModel: ObservableObject {
     @Published var showError = false
     @Published var errorMessage: String?
     @Published var showingPlan = false
+    
+    // Form input fields
+    @Published var targetCalories: String = ""
+    @Published var selectedDiet: String = "None"
+    @Published var excludeIngredients: String = ""
+    
+    // Available diet options
+    let diets = ["None", "Vegetarian", "Vegan", "Gluten Free", "Ketogenic", "Paleo"]
 
     var networkManager: NetworkManager
     
     init(networkManager: NetworkManager) {
         self.networkManager = networkManager
+    }
+    
+    // Process input and generate meal plan
+    func generatePlan() {
+        guard !targetCalories.isEmpty, let calories = Int(targetCalories) else {
+            showError = true
+            errorMessage = "Please enter a valid calorie target"
+            return
+        }
+        
+        let diet = selectedDiet == "None" ? nil : selectedDiet.lowercased()
+        let exclude = excludeIngredients.isEmpty ? nil : excludeIngredients
+            .split(separator: ",")
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+            .joined(separator: ",")
+        
+        Task {
+            await generateMealPlan(
+                targetCalories: calories,
+                diet: diet,
+                exclude: exclude
+            )
+        }
+    }
+    
+    // Reset form fields
+    func resetForm() {
+        targetCalories = ""
+        selectedDiet = "None"
+        excludeIngredients = ""
+    }
+    
+    // Check if form is valid
+    var isFormValid: Bool {
+        !targetCalories.isEmpty && Int(targetCalories) != nil
     }
     
     @MainActor

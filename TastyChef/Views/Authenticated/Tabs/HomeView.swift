@@ -10,7 +10,6 @@ import SwiftUI
 struct HomeView: View {
     @StateObject var vm = HomeViewModel(networkManager: NetworkManager())
     
- 
     
     var body: some View {
         NavigationStack {

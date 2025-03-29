@@ -12,11 +12,18 @@ import Combine
 class SettingsViewModel: ObservableObject {
     @Published var displayName: String = ""
     @Published var email: String = ""
+    @Published var selectedEmoji: String = "👤"
     @Published var isLoading: Bool = false
     @Published var showError: Bool = false
     @Published var errorMessage: String?
     @Published var showSuccess: Bool = false
     @Published var successMessage: String = ""
+    
+    // Available emoji options for profile pictures
+    let emojiOptions: [String] = [
+        "👤", "😀", "😎", "🤠", "👨‍🍳", "👩‍🍳", "🧑‍🍳", "🍕", "🍔", "🌮", 
+        "🍰", "🍩", "🥗", "🍲", "🥑", "🍓", "🧁", "🧇", "🥞", "🍣"
+    ]
     
     private var authManager: AuthenticationManager
     
@@ -30,6 +37,16 @@ class SettingsViewModel: ObservableObject {
             let user = try authManager.getAuthenticatedUser()
             self.email = user.email ?? ""
             self.displayName = user.displayName ?? ""
+            
+            // Extract emoji from displayName if it exists
+            if let displayName = user.displayName, !displayName.isEmpty {
+                // Check if the first character is an emoji from our options
+                let firstChar = String(displayName.prefix(1))
+                if emojiOptions.contains(firstChar) {
+                    self.selectedEmoji = firstChar
+                    self.displayName = String(displayName.dropFirst()).trimmingCharacters(in: .whitespacesAndNewlines)
+                }
+            }
         } catch {
             self.errorMessage = "Failed to load user data: \(error.localizedDescription)"
             self.showError = true
@@ -38,7 +55,8 @@ class SettingsViewModel: ObservableObject {
     
     @MainActor
     func updateProfileName() async {
-        guard !displayName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+        let trimmedName = displayName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedName.isEmpty else {
             self.errorMessage = "Please enter a valid name"
             self.showError = true
             return
@@ -46,12 +64,15 @@ class SettingsViewModel: ObservableObject {
         
         isLoading = true
         
+        // Combine emoji and name for storage
+        let fullDisplayName = "\(selectedEmoji) \(trimmedName)"
+        
         do {
-            try await authManager.updateDisplayName(displayName: displayName)
-            self.successMessage = "Display name updated successfully"
+            try await authManager.updateDisplayName(displayName: fullDisplayName)
+            self.successMessage = "Profile updated successfully"
             self.showSuccess = true
         } catch {
-            self.errorMessage = "Failed to update display name: \(error.localizedDescription)"
+            self.errorMessage = "Failed to update profile: \(error.localizedDescription)"
             self.showError = true
         }
         

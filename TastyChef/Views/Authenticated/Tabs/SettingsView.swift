@@ -11,19 +11,23 @@ struct SettingsView: View {
     @StateObject private var vm = SettingsViewModel(authManager: AuthenticationManager())
     @StateObject private var favoritesVM = FavoritesViewModel.shared
     @State private var showEditNameSheet = false
+    @State private var showEmojiPicker = false
     @State private var showSignOutAlert = false
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
+            VStack {
                 // Profile Section
                 VStack(spacing: 12) {
-                    // Profile icon
-                    Image(systemName: "person.circle.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 80, height: 80)
-                        .foregroundColor(.gray)
+                    // Profile Emoji - clickable to change
+                    Button {
+                        showEmojiPicker = true
+                    } label: {
+                        Text(vm.selectedEmoji)
+                            .font(.system(size: 80))
+                            .frame(width: 100, height: 100)
+                            .background(Circle().fill(Color(.systemGray6)))
+                    }
                     
                     // Display Name with Edit Button
                     HStack {
@@ -51,20 +55,17 @@ struct SettingsView: View {
                 
                 // Settings List
                 VStack(spacing: 0) {
-                        SettingsRowView(icon: "person.fill", iconColor: .green, title: "Account Settings")
-                    
-                    
-                    Divider()
-                        .padding(.leading, 56)
-                    
-                        SettingsRowView(icon: "bell.fill", iconColor: .green, title: "Notifications")
-                    
+                    SettingsRowView(icon: "person.fill", iconColor: .green, title: "Account Settings")
                     
                     Divider()
                         .padding(.leading, 56)
                     
-                        SettingsRowView(icon: "lock.fill", iconColor: .green, title: "Privacy")
+                    SettingsRowView(icon: "bell.fill", iconColor: .green, title: "Notifications")
                     
+                    Divider()
+                        .padding(.leading, 56)
+                    
+                    SettingsRowView(icon: "lock.fill", iconColor: .green, title: "Privacy")
                 }
                 .background(Color(.systemBackground))
                 
@@ -96,6 +97,14 @@ struct SettingsView: View {
                         await vm.updateProfileName()
                     }
                     showEditNameSheet = false
+                }
+            }
+            .sheet(isPresented: $showEmojiPicker) {
+                EmojiPickerView(selectedEmoji: $vm.selectedEmoji) {
+                    Task {
+                        await vm.updateProfileName()
+                    }
+                    showEmojiPicker = false
                 }
             }
             .alert("Sign Out", isPresented: $showSignOutAlert) {
@@ -136,47 +145,8 @@ struct SettingsView: View {
     }
 }
 
-// Helper view for editing name
-struct EditNameView: View {
-    @Binding var displayName: String
-    @State private var newName: String = ""
-    @Environment(\.dismiss) private var dismiss
-    let onSave: () -> Void
-    
-    var body: some View {
-        NavigationView {
-            Form {
-                Section(header: Text("Enter New Name")) {
-                    TextField("Display Name", text: $newName)
-                        .autocorrectionDisabled()
-                        .onAppear {
-                            newName = displayName
-                        }
-                }
-            }
-            .navigationTitle("Update Profile")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
-                }
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Save") {
-                        displayName = newName
-                        onSave()
-                    }
-                    .disabled(newName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-                }
-            }
-        }
-    }
-}
 
 
-// Helper view for settings rows
 struct SettingsRowView: View {
     let icon: String
     let iconColor: Color

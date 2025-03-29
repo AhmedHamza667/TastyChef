@@ -8,9 +8,11 @@
 import Foundation
 import FirebaseAuth
 import UIKit
+import FirebaseStorage
 
-class AuthenticationManager{    
-    func createUser(email: String, password: String) async throws -> AuthDataModel{
+class AuthenticationManager {
+        
+    func createUser(email: String, password: String) async throws -> AuthDataModel {
         let authenticatedUser = try await Auth.auth().createUser(withEmail: email, password: password)
         return AuthDataModel(uid: authenticatedUser.user.uid, 
                             email: authenticatedUser.user.email,
@@ -18,7 +20,7 @@ class AuthenticationManager{
                             photoURL: authenticatedUser.user.photoURL)
     }
     
-    func signIn(email: String, password: String) async throws -> AuthDataModel{
+    func signIn(email: String, password: String) async throws -> AuthDataModel {
         let authenticatedUser = try await Auth.auth().signIn(with: EmailAuthProvider.credential(withEmail: email, password: password))
         return AuthDataModel(uid: authenticatedUser.user.uid, 
                             email: authenticatedUser.user.email,
@@ -45,8 +47,9 @@ class AuthenticationManager{
         changeRequest.displayName = displayName
         try await changeRequest.commitChanges()
     }
-        
-    func signOut() throws{
+    
+    
+    func signOut() throws {
         try Auth.auth().signOut()
     }
 }

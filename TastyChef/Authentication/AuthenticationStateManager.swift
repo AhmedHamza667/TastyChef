@@ -6,22 +6,32 @@
 //
 
 import Foundation
+import FirebaseAuth
 
- class AuthenticationStateManager: ObservableObject {
+class AuthenticationStateManager: ObservableObject {
     @Published var isAuthenticated = false
     static let shared = AuthenticationStateManager()
     
-    private init() {}
+    private init() {
+        // Check for existing user
+        checkForExistingUser()
+    }
+    
+    func checkForExistingUser() {
+        if Auth.auth().currentUser != nil {
+            authenticate()
+        }
+    }
     
     func authenticate() {
-//        print("trying to authinticate current state is \(isAuthenticated)")
+        print("trying to authenticate current state is \(isAuthenticated)")
         isAuthenticated = true
-//        print("successfully authenticated current state is \(isAuthenticated)")
+        print("successfully authenticated current state is \(isAuthenticated)")
     }
     
     func unAutenticate() {
-//        print("trying to unAuthinticate current state is \(isAuthenticated)")
+        print("trying to unAuthenticate current state is \(isAuthenticated)")
         isAuthenticated = false
-//        print("successfully unAuthenticated current state is \(isAuthenticated)")
+        print("successfully unAuthenticated current state is \(isAuthenticated)")
     }
 }
