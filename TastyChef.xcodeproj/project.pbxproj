@@ -40,6 +40,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		778900FE2D98664F000F6AD4 /* Screenshots */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Screenshots;
+			sourceTree = "<group>";
+		};
 		77E6146C2D91D8E2006AA4FD /* TastyChef */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = TastyChef;
@@ -95,6 +100,7 @@
 				77E614872D91D8E5006AA4FD /* TastyChefUITests */,
 				77E6146B2D91D8E2006AA4FD /* Products */,
 				778900FB2D9863FC000F6AD4 /* README.md */,
+				778900FE2D98664F000F6AD4 /* Screenshots */,
 			);
 			sourceTree = "<group>";
 		};
@@ -124,6 +130,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				778900FE2D98664F000F6AD4 /* Screenshots */,
 				77E6146C2D91D8E2006AA4FD /* TastyChef */,
 			);
 			name = TastyChef;
