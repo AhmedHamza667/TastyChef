@@ -7,25 +7,45 @@
 
 import Foundation
 import FirebaseAuth
-class AuthenticationManager{
-    static let shared = AuthenticationManager()
+import UIKit
+
+class AuthenticationManager{    
     func createUser(email: String, password: String) async throws -> AuthDataModel{
         let authenticatedUser = try await Auth.auth().createUser(withEmail: email, password: password)
-        return AuthDataModel(uid: authenticatedUser.user.uid, email: authenticatedUser.user.email)
+        return AuthDataModel(uid: authenticatedUser.user.uid, 
+                            email: authenticatedUser.user.email,
+                            displayName: authenticatedUser.user.displayName,
+                            photoURL: authenticatedUser.user.photoURL)
     }
     
     func signIn(email: String, password: String) async throws -> AuthDataModel{
         let authenticatedUser = try await Auth.auth().signIn(with: EmailAuthProvider.credential(withEmail: email, password: password))
-        return AuthDataModel(uid: authenticatedUser.user.uid, email: authenticatedUser.user.email)
+        return AuthDataModel(uid: authenticatedUser.user.uid, 
+                            email: authenticatedUser.user.email,
+                            displayName: authenticatedUser.user.displayName,
+                            photoURL: authenticatedUser.user.photoURL)
     }
     
     func getAuthenticatedUser() throws -> AuthDataModel {
         guard let user = Auth.auth().currentUser else {
             throw URLError(.badServerResponse)
         }
-        return AuthDataModel(uid: user.uid, email: user.email)
+        return AuthDataModel(uid: user.uid, 
+                            email: user.email,
+                            displayName: user.displayName,
+                            photoURL: user.photoURL)
     }
     
+    func updateDisplayName(displayName: String) async throws {
+        guard let user = Auth.auth().currentUser else {
+            throw URLError(.badURL)
+        }
+        
+        let changeRequest = user.createProfileChangeRequest()
+        changeRequest.displayName = displayName
+        try await changeRequest.commitChanges()
+    }
+        
     func signOut() throws{
         try Auth.auth().signOut()
     }

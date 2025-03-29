@@ -14,14 +14,14 @@ import Foundation
     private init() {}
     
     func authenticate() {
-        print("trying to authinticate current state is \(isAuthenticated)")
+//        print("trying to authinticate current state is \(isAuthenticated)")
         isAuthenticated = true
-        print("successfully authenticated current state is \(isAuthenticated)")
+//        print("successfully authenticated current state is \(isAuthenticated)")
     }
     
     func unAutenticate() {
-        print("trying to unAuthinticate current state is \(isAuthenticated)")
+//        print("trying to unAuthinticate current state is \(isAuthenticated)")
         isAuthenticated = false
-        print("successfully unAuthenticated current state is \(isAuthenticated)")
+//        print("successfully unAuthenticated current state is \(isAuthenticated)")
     }
 }

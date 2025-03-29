@@ -10,7 +10,7 @@ import Foundation
 struct AuthDataModel{
     let uid: String
     let email: String?
-//    let displayName: String?
-//    let photoURL: URL?
+    let displayName: String?
+    let photoURL: URL?
 //    let phoneNumber: String?
 }

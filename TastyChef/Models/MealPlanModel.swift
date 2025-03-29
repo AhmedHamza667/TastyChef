@@ -1,33 +1,37 @@
+//
+//  MealPlan.swift
+//  TastyChef
+//
+//  Created by Ahmed Hamza on 3/25/25.
+//
+
 import Foundation
 
-// MARK: - MealPlan
-struct MealPlan: Codable {
+struct MealPlan: Decodable {
     let week: Week
 }
 
-// MARK: - Week
-struct Week: Codable {
+struct Week: Decodable {
     let monday, tuesday, wednesday, thursday, friday, saturday, sunday: Day
 }
 
-// MARK: - Day
-struct Day: Codable {
+struct Day: Decodable {
     let meals: [Meal]
     let nutrients: Nutrient
 }
 
-// MARK: - Meal
-struct Meal: Codable, Identifiable {
+struct Meal: Decodable, Identifiable {
     let id: Int
     let image: String
-    let imageType: String
+    var imageURL: String {
+        "https://spoonacular.com/recipeImages/\(image)"
+    }
     let title: String
     let readyInMinutes: Int
     let servings: Int
     let sourceUrl: String
 }
 
-// MARK: - Nutrients
-struct Nutrient: Codable {
+struct Nutrient: Decodable {
     let calories, protein, fat, carbohydrates: Double
 } 

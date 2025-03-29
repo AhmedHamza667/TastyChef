@@ -235,7 +235,7 @@ struct StatView: View {
 
 #Preview {
     NavigationView {
-        RecipeDetailView(recipeId: 945221)
+        RecipeDetailView(recipeId: 990586)
     }
 }
 
@@ -247,9 +247,10 @@ struct IngredientsView: View {
                 .font(.title2)
                 .fontWeight(.bold)
             
-            ForEach(recipe.extendedIngredients) { ingredient in
+            // Use uniqueIngredients to avoid duplicates 
+            ForEach(recipe.uniqueIngredients, id: \.uniqueId) { ingredient in
                 HStack {
-                    WebImage(url: URL(string: "https://spoonacular.com/cdn/ingredients_100x100/\(ingredient.image ?? "")")) { image in
+                    WebImage(url: URL(string: "\(ingredient.imageURL)")) { image in
                         image
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -280,7 +281,8 @@ struct InstructionsView: View {
                 .font(.title2)
                 .fontWeight(.bold)
             
-            ForEach(recipe.analyzedInstructions.flatMap { $0.steps }) { step in
+            // Use uniqueInstructions to avoid duplicates and uniqueId for ForEach
+            ForEach(recipe.uniqueInstructions, id: \.uniqueId) { step in
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Step \(step.number)")
                         .font(.headline)
@@ -294,7 +296,7 @@ struct InstructionsView: View {
                             .font(.caption)
                             .foregroundColor(.secondary)
                         HStack {
-                            ForEach(step.equipment, id: \.id) { equipment in
+                            ForEach(Array(zip(step.equipment.indices, step.equipment)), id: \.0) { index, equipment in
                                 Text(equipment.name)
                                     .font(.caption)
                                     .padding(.horizontal, 8)

@@ -1,5 +1,5 @@
 //
-//  PopularDishesModel.swift
+//  PopularRecipesModel.swift
 //  TastyChef
 //
 //  Created by Ahmed Hamza on 3/25/25.

@@ -1,7 +1,13 @@
+//
+//  RecipeDetailModel.swift
+//  TastyChef
+//
+//  Created by Ahmed Hamza on 3/25/25.
+//
+
 import Foundation
 
-// MARK: - RecipeDetailModel
-struct RecipeDetailModel: Codable, Identifiable {
+struct RecipeDetailModel: Decodable, Identifiable {
     let id: Int
     let title: String
     let image: String
@@ -27,43 +33,74 @@ struct RecipeDetailModel: Codable, Identifiable {
         if dairyFree { info.append("Dairy-Free") }
         return info
     }
+    
+    // Computed property for unique ingredients (no duplicates)
+    var uniqueIngredients: [ExtendedIngredient] {
+        let uniqueDict = Dictionary(grouping: extendedIngredients) { $0.name.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) }
+            .compactMapValues { $0.first }
+        
+        return Array(uniqueDict.values).sorted { $0.name < $1.name }
+    }
+    
+    // Computed property for unique steps (no duplicates)
+    var uniqueInstructions: [Step] {
+        let allSteps = analyzedInstructions.flatMap { $0.steps }
+        let uniqueDict = Dictionary(grouping: allSteps) { $0.step.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) }
+            .compactMapValues { $0.first }
+            .values
+            .sorted { $0.number < $1.number }
+            
+        // Optionally renumber steps for consistency
+        return uniqueDict.enumerated().map { index, step in
+            var newStep = step
+            newStep.number = index + 1
+            return newStep
+        }
+    }
 }
 
-// MARK: - ExtendedIngredient
-struct ExtendedIngredient: Codable, Identifiable {
+struct ExtendedIngredient: Decodable, Identifiable {
     let id: Int
     let image: String?
     let name: String
     let original: String
+    var imageURL: String {
+        "https://spoonacular.com/cdn/ingredients_100x100/\(image ?? "")"
+    }
+
+    // Custom identifier to avoid duplicate ID issues in ForEach
+    var uniqueId: String {
+        "\(id)-\(name.replacingOccurrences(of: " ", with: "-"))"
+    }
 }
 
-// MARK: - AnalyzedInstruction
-struct AnalyzedInstruction: Codable {
+struct AnalyzedInstruction: Decodable {
     let steps: [Step]
 }
 
-// MARK: - Step
-struct Step: Codable, Identifiable {
-    let number: Int
+struct Step: Decodable, Identifiable {
+    var number: Int
     let step: String
     let equipment: [Equipment]
     
     var id: Int { number }
+    
+    // Custom identifier to avoid duplicate ID issues in ForEach
+    var uniqueId: String {
+        "\(number)-\(step.prefix(20).replacingOccurrences(of: " ", with: "-"))"
+    }
 }
 
-// MARK: - Equipment
-struct Equipment: Codable {
+struct Equipment: Decodable {
     let id: Int
     let name: String
 }
 
-// MARK: - Nutrition
-struct Nutrition: Codable {
+struct Nutrition: Decodable {
     let nutrients: [Nutrients]
 }
 
-// MARK: - Nutrients
-struct Nutrients: Codable, Identifiable {
+struct Nutrients: Decodable, Identifiable {
     let name: String
     let amount: Double
     let unit: String

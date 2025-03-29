@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchView: View {
-    @StateObject private var viewModel = findByIngredientsViewModel(networkManager: NetworkManager())
+    @StateObject private var viewModel = FindByIngredientsViewModel(networkManager: NetworkManager())
     
     var body: some View {
         NavigationView {

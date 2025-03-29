@@ -24,7 +24,7 @@ extension NetworkManager: NetworkManagerActions {
             guard let url = url else{
                 throw WebServiceError.invalidURL
             }
-            print("Fetching from \(url)")
+//            print("Fetching from \(url)")
             let (data, response) = try await urlSession.data(from: url)
             if response.isValidResponse(){
                 let parsedData = try JSONDecoder().decode(modelType, from: data)

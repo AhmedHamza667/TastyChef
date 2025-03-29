@@ -1,7 +1,13 @@
+//
+//  RecipeByIngredient.swift
+//  TastyChef
+//
+//  Created by Ahmed Hamza on 3/25/25.
+//
+
 import Foundation
 
-// MARK: - Recipe
-struct RecipeByIngredient: Codable, Identifiable {
+struct RecipeByIngredient: Decodable, Identifiable {
     let id: Int
     let title: String
     let image: String
@@ -14,8 +20,7 @@ struct RecipeByIngredient: Codable, Identifiable {
     let likes: Int
 }
 
-// MARK: - Ingredient
-struct Ingredient: Codable, Identifiable {
+struct Ingredient: Decodable, Identifiable {
     let id: Int
     let amount: Double
     let unit: String
@@ -25,7 +30,6 @@ struct Ingredient: Codable, Identifiable {
     let image: String
 }
 
-// MARK: - Convenience Extensions
 extension RecipeByIngredient {
     var imageURL: URL? {
         return URL(string: image)

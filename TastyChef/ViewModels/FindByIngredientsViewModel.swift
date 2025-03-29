@@ -8,7 +8,7 @@
 import Foundation
 
 
-class findByIngredientsViewModel: ObservableObject {
+class FindByIngredientsViewModel: ObservableObject {
     @Published var ingredients: [String] = []
     @Published var recipes: [RecipeByIngredient] = []
     @Published var isLoading = false

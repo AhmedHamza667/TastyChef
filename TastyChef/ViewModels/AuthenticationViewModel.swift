@@ -79,7 +79,7 @@ final class AuthenticationViewModel: ObservableObject{
             Task {
                 do {
                     let returnedUserData = try await authenticationManager.signIn(email: email, password: password)
-                    print("Successfully Logged in user with email: \(returnedUserData)")
+                    print("Successfully Logged in user with email: \(returnedUserData.email ?? "")")
                     await MainActor.run {
                         isLoading = false
                         AuthenticationStateManager.shared.authenticate()
