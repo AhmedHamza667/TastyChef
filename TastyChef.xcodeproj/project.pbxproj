@@ -10,6 +10,7 @@
 		77523E482D94C4A6003318F6 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 77523E472D94C4A6003318F6 /* SDWebImageSwiftUI */; };
 		778900F22D98505A000F6AD4 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 778900F12D98505A000F6AD4 /* FirebaseStorage */; };
 		778900F42D98507B000F6AD4 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 778900F32D98507B000F6AD4 /* FirebaseStorageCombine-Community */; };
+		778900FC2D9863FC000F6AD4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 778900FB2D9863FC000F6AD4 /* README.md */; };
 		77E614A32D91F280006AA4FD /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 77E614A22D91F280006AA4FD /* FirebaseAnalytics */; };
 		77E614A52D91F280006AA4FD /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 77E614A42D91F280006AA4FD /* FirebaseAuth */; };
 /* End PBXBuildFile section */
@@ -32,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		778900FB2D9863FC000F6AD4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		77E6146A2D91D8E2006AA4FD /* TastyChef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TastyChef.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77E6147A2D91D8E5006AA4FD /* TastyChefTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TastyChefTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		77E614842D91D8E5006AA4FD /* TastyChefUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TastyChefUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,6 +94,7 @@
 				77E6147D2D91D8E5006AA4FD /* TastyChefTests */,
 				77E614872D91D8E5006AA4FD /* TastyChefUITests */,
 				77E6146B2D91D8E2006AA4FD /* Products */,
+				778900FB2D9863FC000F6AD4 /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -234,6 +237,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				778900FC2D9863FC000F6AD4 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
