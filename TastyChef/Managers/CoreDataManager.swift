@@ -7,12 +7,21 @@
 
 import CoreData
 
-class CoreDataManager {
-    static let shared = CoreDataManager()
-    
-    private init() {
-        container = NSPersistentContainer(name: "FavoriteRecipesContainer")
-        
+
+protocol CoreDataServiceProtocol {
+    var context: NSManagedObjectContext { get }
+    func save()
+    func addToFavorites(id: Int32, title: String, image: String)
+    func removeFromFavorites(id: Int32)
+    func isRecipeFavorited(id: Int32) -> Bool
+    func getAllFavorites() -> [FavRecipes]
+    func resetAllFavorites()
+}
+
+class CoreDataManager: CoreDataServiceProtocol {
+    init(containerName: String = "FavoriteRecipesContainer") {
+        container = NSPersistentContainer(name: containerName)
+
         container.loadPersistentStores { description, error in
             if let error = error {
                 print("Core Data failed to load: \(error.localizedDescription)")

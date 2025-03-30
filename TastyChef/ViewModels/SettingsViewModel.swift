@@ -25,9 +25,9 @@ class SettingsViewModel: ObservableObject {
         "🍰", "🍩", "🥗", "🍲", "🥑", "🍓", "🧁", "🧇", "🥞", "🍣"
     ]
     
-    private var authManager: AuthenticationManager
+    private var authManager: AuthenticationServiceProtocol
     
-    init(authManager: AuthenticationManager) {
+    init(authManager: AuthenticationServiceProtocol) {
         self.authManager = authManager
         loadUserData()
     }

@@ -18,10 +18,10 @@ final class AuthenticationViewModel: ObservableObject{
     @Published var showError = false
 
 
-    private var authenticationManager: AuthenticationManager
+    private var authenticationManager: AuthenticationServiceProtocol
     private var cancellables = Set<AnyCancellable>()
 
-    init(authenticationManager: AuthenticationManager) {
+    init(authenticationManager: AuthenticationServiceProtocol) {
         self.authenticationManager = authenticationManager
         setupValidation()
     }

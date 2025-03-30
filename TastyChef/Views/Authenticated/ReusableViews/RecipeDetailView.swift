@@ -12,7 +12,7 @@ struct RecipeDetailView: View {
     let recipeId: Int
     @StateObject private var viewModel = RecipeDetailViewModel(networkManager: NetworkManager())
     @Environment(\.dismiss) private var dismiss
-    @StateObject private var favoritesVM = FavoritesViewModel.shared
+    @StateObject private var favoritesVM = FavoritesViewModel(coreDataManager: CoreDataManager())
 
     
     var body: some View {

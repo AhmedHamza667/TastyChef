@@ -10,7 +10,7 @@ import SDWebImageSwiftUI
 
 struct RecipeCardView: View {
     let recipe: Result
-    @StateObject private var favoritesVM = FavoritesViewModel.shared
+    @StateObject private var favoritesVM = FavoritesViewModel(coreDataManager: CoreDataManager())
     var body: some View {
         HStack(spacing: 16) {
             // Recipe Image

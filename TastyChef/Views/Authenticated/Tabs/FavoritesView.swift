@@ -9,7 +9,7 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct FavoritesView: View {
-    @StateObject private var viewModel = FavoritesViewModel()
+    @StateObject private var viewModel = FavoritesViewModel(coreDataManager: CoreDataManager())
     
     var body: some View {
         NavigationStack {

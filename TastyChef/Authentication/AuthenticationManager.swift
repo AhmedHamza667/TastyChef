@@ -10,7 +10,16 @@ import FirebaseAuth
 import UIKit
 import FirebaseStorage
 
-class AuthenticationManager {
+
+protocol AuthenticationServiceProtocol {
+    func createUser(email: String, password: String) async throws -> AuthDataModel
+    func signIn(email: String, password: String) async throws -> AuthDataModel
+    func getAuthenticatedUser() throws -> AuthDataModel
+    func updateDisplayName(displayName: String) async throws
+    func signOut() throws
+}
+
+class AuthenticationManager: AuthenticationServiceProtocol {
         
     func createUser(email: String, password: String) async throws -> AuthDataModel {
         let authenticatedUser = try await Auth.auth().createUser(withEmail: email, password: password)

@@ -9,15 +9,15 @@ import SwiftUI
 import CoreData
 
 class FavoritesViewModel: ObservableObject {
-    static let shared = FavoritesViewModel()
     
     @Published var favorites: [Result] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
     
-    private let coreDataManager = CoreDataManager.shared
+    let coreDataManager: CoreDataServiceProtocol!
     
-    init() {
+    init(coreDataManager: CoreDataServiceProtocol) {
+        self.coreDataManager = coreDataManager
         loadFavorites()
     }
     

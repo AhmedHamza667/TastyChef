@@ -44,7 +44,6 @@ TastyChef is built with:
 - **SwiftUI**: Modern declarative UI framework
 - **MVVM Architecture**: Clean separation of concerns
 - **Firebase Authentication**: Secure user authentication
-- **Firebase Storage**: Profile image storage
 - **RESTful API Integration**: Recipe and meal plan data
 
 ## Installation
@@ -128,11 +127,9 @@ TastyChef is built with:
 
 ## Future Enhancements
 
-- Shopping list generation
+- Recommend random recipe
 - Social sharing features
-- Custom recipe creation
-- Barcode scanning for ingredients
-- Voice-guided cooking instructions
+- AI quick answer
 - Offline recipe storage
 
 ## License
