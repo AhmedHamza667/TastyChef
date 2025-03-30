@@ -11,7 +11,7 @@ import SwiftUI
 struct EmojiPickerView: View {
     @Binding var selectedEmoji: String
     @Environment(\.dismiss) private var dismiss
-    @StateObject private var vm = SettingsViewModel(authManager: AuthenticationManager())
+    @StateObject private var vm = SettingsViewModel(authManager: AuthenticationManager(), authenticationStateManager: AuthenticationStateManager())
     let onSave: () -> Void
     
     let columns = [

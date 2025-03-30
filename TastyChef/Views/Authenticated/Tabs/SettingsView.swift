@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @StateObject private var vm = SettingsViewModel(authManager: AuthenticationManager())
+    @StateObject private var vm = SettingsViewModel(authManager: AuthenticationManager(), authenticationStateManager: AuthenticationStateManager())
     @StateObject private var favoritesVM = FavoritesViewModel(coreDataManager: CoreDataManager())
     @State private var showEditNameSheet = false
     @State private var showEmojiPicker = false

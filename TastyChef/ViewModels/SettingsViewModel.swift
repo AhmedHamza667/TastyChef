@@ -26,9 +26,11 @@ class SettingsViewModel: ObservableObject {
     ]
     
     private var authManager: AuthenticationServiceProtocol
-    
-    init(authManager: AuthenticationServiceProtocol) {
+    private var authenticationStateManager: AuthenticationStateServiceProtocol
+
+    init(authManager: AuthenticationServiceProtocol, authenticationStateManager: AuthenticationStateServiceProtocol) {
         self.authManager = authManager
+        self.authenticationStateManager = authenticationStateManager
         loadUserData()
     }
     
@@ -82,7 +84,7 @@ class SettingsViewModel: ObservableObject {
     func signOut() {
         do {
             try authManager.signOut()
-            AuthenticationStateManager.shared.unAutenticate()
+            authenticationStateManager.unAutenticate()
         } catch {
             self.errorMessage = "Failed to sign out: \(error.localizedDescription)"
             self.showError = true

@@ -10,7 +10,7 @@ import Firebase
 
 @main
 struct TastyChefApp: App {
-    @StateObject private var authStateManager = AuthenticationStateManager.shared
+    @StateObject private var authStateManager = AuthenticationStateManager()
     @UIApplicationDelegateAdaptor(AppDelete.self) var delegate
     var body: some Scene {
         WindowGroup {

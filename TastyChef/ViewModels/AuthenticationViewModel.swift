@@ -19,10 +19,12 @@ final class AuthenticationViewModel: ObservableObject{
 
 
     private var authenticationManager: AuthenticationServiceProtocol
+    private var authenticationStateManager: AuthenticationStateServiceProtocol
     private var cancellables = Set<AnyCancellable>()
 
-    init(authenticationManager: AuthenticationServiceProtocol) {
+    init(authenticationManager: AuthenticationServiceProtocol, authenticationStateManager: AuthenticationStateServiceProtocol) {
         self.authenticationManager = authenticationManager
+        self.authenticationStateManager = authenticationStateManager
         setupValidation()
     }
     private let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
@@ -58,7 +60,7 @@ final class AuthenticationViewModel: ObservableObject{
                 print("Successfully created user with email: \(returnedUserData)")
                 await MainActor.run {
                     isLoading = false
-                    AuthenticationStateManager.shared.authenticate()
+                    authenticationStateManager.authenticate()
                 }
             } catch{
                 await MainActor.run {
@@ -82,7 +84,7 @@ final class AuthenticationViewModel: ObservableObject{
                     print("Successfully Logged in user with email: \(returnedUserData.email ?? "")")
                     await MainActor.run {
                         isLoading = false
-                        AuthenticationStateManager.shared.authenticate()
+                        authenticationStateManager.authenticate()
                     }
                 } catch {
                     await MainActor.run {

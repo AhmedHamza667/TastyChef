@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LogInView: View {
     @Environment(\.dismiss) private var dismiss
-    @StateObject var vm = AuthenticationViewModel(authenticationManager: AuthenticationManager())
+    @StateObject var vm = AuthenticationViewModel(authenticationManager: AuthenticationManager(), authenticationStateManager: AuthenticationStateManager())
     var body: some View {
         NavigationStack {
             VStack(spacing: 24) {

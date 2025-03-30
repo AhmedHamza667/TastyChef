@@ -8,11 +8,18 @@
 import Foundation
 import FirebaseAuth
 
-class AuthenticationStateManager: ObservableObject {
+
+protocol AuthenticationStateServiceProtocol {
+    var isAuthenticated: Bool { get set }
+    func checkForExistingUser()
+    func authenticate()
+    func unAutenticate()
+}
+
+class AuthenticationStateManager: ObservableObject, AuthenticationStateServiceProtocol {
     @Published var isAuthenticated = false
-    static let shared = AuthenticationStateManager()
     
-    private init() {
+    init() {
         // Check for existing user
         checkForExistingUser()
     }
