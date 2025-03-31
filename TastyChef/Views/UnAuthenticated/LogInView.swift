@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LogInView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var authStateManager: AuthenticationStateManager
     @StateObject var vm = AuthenticationViewModel(authenticationManager: AuthenticationManager(), authenticationStateManager: AuthenticationStateManager())
     var body: some View {
         NavigationStack {
@@ -85,6 +86,9 @@ struct LogInView: View {
             }
             .disabled(vm.isLoading)
         
+        }
+        .onAppear{
+            vm.authenticationStateManager = authStateManager
         }
     }
 }

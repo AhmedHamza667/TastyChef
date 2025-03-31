@@ -26,7 +26,7 @@ class SettingsViewModel: ObservableObject {
     ]
     
     private var authManager: AuthenticationServiceProtocol
-    private var authenticationStateManager: AuthenticationStateServiceProtocol
+    var authenticationStateManager: AuthenticationStateServiceProtocol
 
     init(authManager: AuthenticationServiceProtocol, authenticationStateManager: AuthenticationStateServiceProtocol) {
         self.authManager = authManager

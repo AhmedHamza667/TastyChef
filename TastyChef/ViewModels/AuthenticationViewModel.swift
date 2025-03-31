@@ -19,7 +19,7 @@ final class AuthenticationViewModel: ObservableObject{
 
 
     private var authenticationManager: AuthenticationServiceProtocol
-    private var authenticationStateManager: AuthenticationStateServiceProtocol
+    var authenticationStateManager: AuthenticationStateServiceProtocol
     private var cancellables = Set<AnyCancellable>()
 
     init(authenticationManager: AuthenticationServiceProtocol, authenticationStateManager: AuthenticationStateServiceProtocol) {

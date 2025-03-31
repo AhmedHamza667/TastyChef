@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @EnvironmentObject var authStateManager: AuthenticationStateManager
     @StateObject private var vm = SettingsViewModel(authManager: AuthenticationManager(), authenticationStateManager: AuthenticationStateManager())
     @StateObject private var favoritesVM = FavoritesViewModel(coreDataManager: CoreDataManager())
     @State private var showEditNameSheet = false
@@ -139,6 +140,8 @@ struct SettingsView: View {
             .onAppear {
                 favoritesVM.loadFavorites()
                 vm.loadUserData()
+                vm.authenticationStateManager = authStateManager
+                    
             }
         }
     }

@@ -18,6 +18,10 @@ struct RootView: View {
                 LandingPage()
             }
         }
+        .onAppear {
+            // Check for existing user when view appears
+            authStateManager.checkForExistingUser()
+        }
     }
 }
 #Preview {
