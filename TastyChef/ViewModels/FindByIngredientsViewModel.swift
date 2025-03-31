@@ -66,7 +66,7 @@ class FindByIngredientsViewModel: ObservableObject {
             ignorePantry: ignorePantry
         )
         
-        // Hide input section when search completes
+        // Hides until search completes
         showInputSection = false
     }
 

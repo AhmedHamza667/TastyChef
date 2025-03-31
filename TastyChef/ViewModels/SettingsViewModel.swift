@@ -19,7 +19,7 @@ class SettingsViewModel: ObservableObject {
     @Published var showSuccess: Bool = false
     @Published var successMessage: String = ""
     
-    // Available emoji options for profile pictures
+    // Available options
     let emojiOptions: [String] = [
         "👤", "😀", "😎", "🤠", "👨‍🍳", "👩‍🍳", "🧑‍🍳", "🍕", "🍔", "🌮", 
         "🍰", "🍩", "🥗", "🍲", "🥑", "🍓", "🧁", "🧇", "🥞", "🍣"
@@ -40,9 +40,9 @@ class SettingsViewModel: ObservableObject {
             self.email = user.email ?? ""
             self.displayName = user.displayName ?? ""
             
-            // Extract emoji from displayName if it exists
+            // Extract emoji from displayName
             if let displayName = user.displayName, !displayName.isEmpty {
-                // Check if the first character is an emoji from our options
+                // Check if the first character is an emoji
                 let firstChar = String(displayName.prefix(1))
                 if emojiOptions.contains(firstChar) {
                     self.selectedEmoji = firstChar

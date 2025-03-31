@@ -34,7 +34,7 @@ struct RecipeDetailModel: Decodable, Identifiable {
         return info
     }
     
-    // Computed property for unique ingredients (no duplicates)
+    // (no duplicates in ingredients)
     var uniqueIngredients: [ExtendedIngredient] {
         let uniqueDict = Dictionary(grouping: extendedIngredients) { $0.name.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) }
             .compactMapValues { $0.first }
@@ -42,7 +42,7 @@ struct RecipeDetailModel: Decodable, Identifiable {
         return Array(uniqueDict.values).sorted { $0.name < $1.name }
     }
     
-    // Computed property for unique steps (no duplicates)
+    // (no duplicates in steps)
     var uniqueInstructions: [Step] {
         let allSteps = analyzedInstructions.flatMap { $0.steps }
         let uniqueDict = Dictionary(grouping: allSteps) { $0.step.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) }
@@ -50,7 +50,6 @@ struct RecipeDetailModel: Decodable, Identifiable {
             .values
             .sorted { $0.number < $1.number }
             
-        // Optionally renumber steps for consistency
         return uniqueDict.enumerated().map { index, step in
             var newStep = step
             newStep.number = index + 1
@@ -68,7 +67,7 @@ struct ExtendedIngredient: Decodable, Identifiable {
         "https://spoonacular.com/cdn/ingredients_100x100/\(image ?? "")"
     }
 
-    // Custom identifier to avoid duplicate ID issues in ForEach
+    // avoid duplicate ID issues in ForEach
     var uniqueId: String {
         "\(id)-\(name.replacingOccurrences(of: " ", with: "-"))"
     }
@@ -85,7 +84,7 @@ struct Step: Decodable, Identifiable {
     
     var id: Int { number }
     
-    // Custom identifier to avoid duplicate ID issues in ForEach
+    // to avoid duplicate ID issues in ForEach
     var uniqueId: String {
         "\(number)-\(step.prefix(20).replacingOccurrences(of: " ", with: "-"))"
     }

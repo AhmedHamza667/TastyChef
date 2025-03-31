@@ -57,13 +57,6 @@ struct TabBarView: View {
                 .tag(4)
         }
         .tint(Color("colorPrimary"))
-        .onAppear {
-            // Customize TabBar appearance
-            let appearance = UITabBarAppearance()
-            appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = .white
-            
-        }
     }
 }
 

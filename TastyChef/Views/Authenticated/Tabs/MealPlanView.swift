@@ -33,9 +33,9 @@ struct MealPlanView: View {
                     .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
                     .padding(.horizontal)
                     
-                    // Form Fields
+                    // Form
                     VStack(spacing: 16) {
-                        // Calories field
+                        // Calories
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Target Daily Calories")
                                 .font(.subheadline)
@@ -52,7 +52,7 @@ struct MealPlanView: View {
                                 )
                         }
                         
-                        // Diet Picker
+                        // Diet
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Diet Type")
                                 .font(.subheadline)
@@ -94,7 +94,7 @@ struct MealPlanView: View {
                     
                     Spacer()
                     
-                    // Generate Button
+                    // Generate
                     Button(action: viewModel.generatePlan) {
                         HStack {
                             if viewModel.isLoading {

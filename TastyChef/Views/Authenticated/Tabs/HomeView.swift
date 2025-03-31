@@ -41,10 +41,10 @@ struct HomeView: View {
                     .cornerRadius(12)
                     .padding(.horizontal)
                     
-                    // Categories Section
+                    // Categories
                     CategoriesView(vm: vm)
                     
-                    // Popular Recipes Section
+                    // Popular Recipes
                     VStack(alignment: .leading, spacing: 16) {
                         SortOptionsView(vm: vm)
                         

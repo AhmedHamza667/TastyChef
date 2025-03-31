@@ -26,7 +26,6 @@ struct RecipeDetailView: View {
                     case .loaded:
                         if let recipe = viewModel.recipeDetails {
                             VStack(alignment: .leading, spacing: 0) {
-                                // Hero Image
                                 ZStack(alignment: .topLeading) {
                                     WebImage(url: URL(string: recipe.image)) { image in
                                         image
@@ -38,7 +37,6 @@ struct RecipeDetailView: View {
                                     }
                                     .frame(height: 300)
                                     .clipped()
-                                    // check this
                                     .overlay(alignment: .bottomTrailing) {
                                         Button(action: {
                                             favoritesVM.toggleFavorite(
@@ -64,7 +62,7 @@ struct RecipeDetailView: View {
 
                                     }
                                     
-                                    // Custom Back Button
+                                    // Custom Button
                                     Button(action: {
                                         dismiss()
                                     }) {
@@ -142,12 +140,12 @@ struct RecipeDetailView: View {
                                     
                                     Divider()
                                     
-                                    // Ingredients Section
+                                    // Ingredients
                                     IngredientsView(recipe: recipe)
                                     
                                     Divider()
                                     
-                                    // Instructions Section
+                                    // Instructions
                                     InstructionsView(recipe: recipe)
                                     
                                     // Nutrition Label
@@ -195,7 +193,13 @@ struct RecipeDetailView: View {
     }
 }
 
-// MARK: - Supporting Views
+#Preview {
+    NavigationView {
+        RecipeDetailView(recipeId: 990586)
+    }
+}
+
+// Supporting Views
 struct NutritionRow: View {
     let title: String
     let value: String
@@ -233,11 +237,6 @@ struct StatView: View {
 }
 
 
-#Preview {
-    NavigationView {
-        RecipeDetailView(recipeId: 990586)
-    }
-}
 
 struct IngredientsView: View {
     var recipe: RecipeDetailModel
@@ -281,7 +280,7 @@ struct InstructionsView: View {
                 .font(.title2)
                 .fontWeight(.bold)
             
-            // Use uniqueInstructions to avoid duplicates and uniqueId for ForEach
+            // Use uniqueInstructions to avoid duplicates
             ForEach(recipe.uniqueInstructions, id: \.uniqueId) { step in
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Step \(step.number)")

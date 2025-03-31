@@ -17,9 +17,8 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                // Profile Section
                 VStack(spacing: 12) {
-                    // Profile Emoji - clickable to change
+                    // Profile Emoji clickable to change
                     Button {
                         showEmojiPicker = true
                     } label: {
@@ -71,7 +70,7 @@ struct SettingsView: View {
                 
                 Spacer()
                 
-                // Sign Out Button
+                // Sign Out
                 Button(role: .destructive) {
                     showSignOutAlert = true
                 } label: {

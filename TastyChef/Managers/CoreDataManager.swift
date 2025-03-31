@@ -18,7 +18,7 @@ protocol CoreDataServiceProtocol {
     func resetAllFavorites()
 }
 
-class CoreDataManager: CoreDataServiceProtocol {
+class CoreDataManager: CoreDataServiceProtocol, ObservableObject {
     init(containerName: String = "FavoriteRecipesContainer") {
         container = NSPersistentContainer(name: containerName)
 

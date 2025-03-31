@@ -14,12 +14,12 @@ class MealPlanViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var showingPlan = false
     
-    // Form input fields
+    // Form fields
     @Published var targetCalories: String = ""
     @Published var selectedDiet: String = "None"
     @Published var excludeIngredients: String = ""
     
-    // Available diet options
+    // Available options
     let diets = ["None", "Vegetarian", "Vegan", "Gluten Free", "Ketogenic", "Paleo"]
 
     var networkManager: NetworkManager
@@ -28,7 +28,7 @@ class MealPlanViewModel: ObservableObject {
         self.networkManager = networkManager
     }
     
-    // Process input and generate meal plan
+    // generate meal plan
     func generatePlan() {
         guard !targetCalories.isEmpty, let calories = Int(targetCalories) else {
             showError = true
@@ -51,7 +51,7 @@ class MealPlanViewModel: ObservableObject {
         }
     }
     
-    // Reset form fields
+    // Reset form
     func resetForm() {
         targetCalories = ""
         selectedDiet = "None"

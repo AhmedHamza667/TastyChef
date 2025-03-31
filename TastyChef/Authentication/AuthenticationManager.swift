@@ -19,7 +19,7 @@ protocol AuthenticationServiceProtocol {
     func signOut() throws
 }
 
-class AuthenticationManager: AuthenticationServiceProtocol {
+class AuthenticationManager: AuthenticationServiceProtocol, ObservableObject {
         
     func createUser(email: String, password: String) async throws -> AuthDataModel {
         let authenticatedUser = try await Auth.auth().createUser(withEmail: email, password: password)

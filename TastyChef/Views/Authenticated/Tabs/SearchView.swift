@@ -57,7 +57,6 @@ struct SearchView: View {
                                 .padding(.horizontal, -8)
                             }
                             
-                            // Settings
                             VStack(spacing: 16) {
                                 // Number of Recipes
                                 VStack(alignment: .leading, spacing: 8) {
@@ -69,7 +68,7 @@ struct SearchView: View {
                                         .accentColor(.green)
                                 }
                                 
-                                // Ignore Pantry Toggle
+                                // Ignore Pantry
                                 Toggle(isOn: $viewModel.ignorePantry) {
                                     Text("Ignore Pantry Ingredients")
                                         .font(.subheadline)
@@ -81,7 +80,7 @@ struct SearchView: View {
                             .background(Color(.systemBackground))
                             .cornerRadius(12)
                             
-                            // Search Button
+                            // Search
                             Button(action: {
                                 Task {
                                     await viewModel.searchRecipes()
@@ -113,7 +112,7 @@ struct SearchView: View {
                         .padding(.top)
                         .transition(.move(edge: .top).combined(with: .opacity))
                     } else if !viewModel.recipes.isEmpty {
-                        // Show filters summary and edit button when input is hidden
+                        // Show filters summary when input is hidden
                         VStack(alignment: .leading, spacing: 10) {
                             HStack {
                                 VStack(alignment: .leading, spacing: 4) {
@@ -163,7 +162,7 @@ struct SearchView: View {
                         .transition(.move(edge: .top).combined(with: .opacity))
                     }
                     
-                    // Results Section
+                    // Results
                     if viewModel.isLoading {
                         Spacer()
                         ProgressView("Searching for recipes...")
