@@ -53,9 +53,9 @@ class HomeViewModel: ObservableObject {
     private var currentParameters: [String: String] = [:]  // Store current parameters
     var limit: Int = 10
     var offset: Int = 0
-    var networkManager: NetworkManager!
+    var networkManager: NetworkManagerActions!
     
-    init(networkManager: NetworkManager!) {
+    init(networkManager: NetworkManagerActions!) {
         self.networkManager = networkManager
         setUpSearch()
     }

@@ -18,9 +18,9 @@ class RecipeDetailViewModel: ObservableObject {
     @Published var recipeDetails: RecipeDetailModel?
     @Published var nutritionLabelHTML: String?
     @Published var viewState: RecipeDetailViewState = .empty
-    var networkManager: NetworkManager!
+    var networkManager: NetworkManagerActions!
     
-    init(networkManager: NetworkManager!) {
+    init(networkManager: NetworkManagerActions!) {
         self.networkManager = networkManager
     }
     

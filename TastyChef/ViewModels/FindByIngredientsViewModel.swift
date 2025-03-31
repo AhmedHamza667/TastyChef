@@ -20,9 +20,9 @@ class FindByIngredientsViewModel: ObservableObject {
     @Published var recipeCount = 5.0
     @Published var ignorePantry = false
     
-    var networkManager: NetworkManager
+    var networkManager: NetworkManagerActions
     
-    init(networkManager: NetworkManager) {
+    init(networkManager: NetworkManagerActions) {
         self.networkManager = networkManager
     }
     

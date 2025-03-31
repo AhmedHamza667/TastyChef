@@ -22,9 +22,9 @@ class MealPlanViewModel: ObservableObject {
     // Available options
     let diets = ["None", "Vegetarian", "Vegan", "Gluten Free", "Ketogenic", "Paleo"]
 
-    var networkManager: NetworkManager
+    var networkManager: NetworkManagerActions
     
-    init(networkManager: NetworkManager) {
+    init(networkManager: NetworkManagerActions) {
         self.networkManager = networkManager
     }
     
