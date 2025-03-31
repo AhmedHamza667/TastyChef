@@ -16,17 +16,19 @@ struct RecipeDetailView: View {
 
     
     var body: some View {
-        VStack(spacing: 0) {
-            ScrollView {
-                VStack(spacing: 0) {
-                    switch viewModel.viewState {
-                    case .loading:
-                        LoadingView()
-                            .frame(minHeight: UIScreen.main.bounds.height - 100)
-                    case .loaded:
-                        if let recipe = viewModel.recipeDetails {
-                            VStack(alignment: .leading, spacing: 0) {
-                                ZStack(alignment: .topLeading) {
+        ZStack(alignment: .top) {
+            // Main content
+            VStack(spacing: 0) {
+                ScrollView {
+                    VStack(spacing: 0) {
+                        switch viewModel.viewState {
+                        case .loading:
+                            LoadingView()
+                                .frame(minHeight: UIScreen.main.bounds.height - 100)
+                        case .loaded:
+                            if let recipe = viewModel.recipeDetails {
+                                VStack(alignment: .leading, spacing: 0) {
+                                    // Image without buttons
                                     WebImage(url: URL(string: recipe.image)) { image in
                                         image
                                             .resizable()
@@ -37,154 +39,155 @@ struct RecipeDetailView: View {
                                     }
                                     .frame(height: 300)
                                     .clipped()
-                                    .overlay(alignment: .bottomTrailing) {
-                                        Button(action: {
-                                            favoritesVM.toggleFavorite(
-                                                id: Int32(recipe.id),
-                                                title: recipe.title,
-                                                image: recipe.image
-                                            )
-                                        }) {
-                                                Image(systemName: favoritesVM.isRecipeFavorited(id: Int32(recipe.id)) ? "heart.fill" : "heart")
-                                                    .font(.system(size: 20, weight: .semibold))
-
+                                    
+                                    // Content
+                                    VStack(alignment: .leading, spacing: 20) {
+                                        // Title and Stats
+                                        VStack(alignment: .leading, spacing: 8) {
+                                            Text(recipe.title)
+                                                .font(.title)
+                                                .fontWeight(.bold)
                                             
-                                            .padding(12)
-                                            .background(Color(.systemBackground))
-                                            .foregroundColor(
-                                                favoritesVM.isRecipeFavorited(id: Int32(recipe.id)) ? .red : .primary
-                                            )
+                                            HStack(spacing: 15) {
+                                                StatView(icon: "clock", value: "\(recipe.readyInMinutes)", text: "mins")
+                                                StatView(icon: "person.2", value: "\(recipe.servings)", text: "servings")
+                                                StatView(icon: "heart.fill", value: "\(recipe.aggregateLikes)", text: "likes")
+                                            }
+                                        }
+                                        
+                                        // Dietary Tags
+                                        if !recipe.dietaryInfo.isEmpty {
+                                            ScrollView(.horizontal, showsIndicators: false) {
+                                                HStack {
+                                                    ForEach(recipe.dietaryInfo, id: \.self) { diet in
+                                                        Text(diet)
+                                                            .font(.caption)
+                                                            .padding(.horizontal, 12)
+                                                            .padding(.vertical, 6)
+                                                            .background(Color("colorPrimary").opacity(0.1))
+                                                            .foregroundColor(Color("colorPrimary"))
+                                                            .clipShape(Capsule())
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        
+                                        Divider()
+                                        
+                                        // Nutrition Facts Section
+                                        VStack(alignment: .leading, spacing: 12) {
+                                            Text("Nutrition Facts")
+                                                .font(.title2)
+                                                .fontWeight(.bold)
+                                            
+                                            VStack(spacing: 12) {
+                                                if let nutrients = recipe.nutrition?.nutrients {
+                                                    let wantedNutrients = ["Calories", "Protein", "Carbohydrates", "Fat", "Sugar"]
+                                                    
+                                                    ForEach(nutrients.filter { wantedNutrients.contains($0.name) }) { nutrient in
+                                                        NutritionRow(
+                                                            title: nutrient.name,
+                                                            value: "\(nutrient.amount)\(nutrient.unit)"
+                                                        )
+                                                    }
+                                                }
+                                            }
+                                            .padding()
+                                            .background(Color.gray.opacity(0.1))
                                             .cornerRadius(12)
-                                            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
-
                                         }
-                                        .padding(.trailing, 30)
-
-                                    }
-                                    
-                                    // Custom Button
-                                    Button(action: {
-                                        dismiss()
-                                    }) {
-                                        HStack {
-                                            Image(systemName: "chevron.left")
-                                                .font(.system(size: 16, weight: .semibold))
-                                            Text("Back")
-                                        }
-                                        .foregroundColor(.white)
-                                        .padding(8)
-                                        .background(Color.black.opacity(0.6))
-                                        .cornerRadius(20)
-                                    }
-                                    .padding(.leading, 40)
-                                    .padding(.top, 48)
-                                }
-                                
-                                // Content
-                                VStack(alignment: .leading, spacing: 20) {
-                                    // Title and Stats
-                                    VStack(alignment: .leading, spacing: 8) {
-                                        Text(recipe.title)
-                                            .font(.title)
-                                            .fontWeight(.bold)
                                         
-                                        HStack(spacing: 15) {
-                                            StatView(icon: "clock", value: "\(recipe.readyInMinutes)", text: "mins")
-                                            StatView(icon: "person.2", value: "\(recipe.servings)", text: "servings")
-                                            StatView(icon: "heart.fill", value: "\(recipe.aggregateLikes)", text: "likes")
-                                        }
-                                    }
-                                    
-                                    // Dietary Tags
-                                    if !recipe.dietaryInfo.isEmpty {
-                                        ScrollView(.horizontal, showsIndicators: false) {
-                                            HStack {
-                                                ForEach(recipe.dietaryInfo, id: \.self) { diet in
-                                                    Text(diet)
-                                                        .font(.caption)
-                                                        .padding(.horizontal, 12)
-                                                        .padding(.vertical, 6)
-                                                        .background(Color("colorPrimary").opacity(0.1))
-                                                        .foregroundColor(Color("colorPrimary"))
-                                                        .clipShape(Capsule())
-                                                }
-                                            }
-                                        }
-                                    }
-                                    
-                                    
-                                    Divider()
-                                    
-                                    // Nutrition Facts Section
-                                    VStack(alignment: .leading, spacing: 12) {
-                                        Text("Nutrition Facts")
-                                            .font(.title2)
-                                            .fontWeight(.bold)
+                                        Divider()
                                         
-                                        VStack(spacing: 12) {
-                                            if let nutrients = recipe.nutrition?.nutrients {
-                                                let wantedNutrients = ["Calories", "Protein", "Carbohydrates", "Fat", "Sugar"]
-                                                
-                                                ForEach(nutrients.filter { wantedNutrients.contains($0.name) }) { nutrient in
-                                                    NutritionRow(
-                                                        title: nutrient.name,
-                                                        value: "\(nutrient.amount)\(nutrient.unit)"
-                                                    )
-                                                }
-                                            }
-                                        }
-                                        .padding()
-                                        .background(Color.gray.opacity(0.1))
-                                        .cornerRadius(12)
-                                    }
-                                    
-                                    Divider()
-                                    
-                                    // Ingredients
-                                    IngredientsView(recipe: recipe)
-                                    
-                                    Divider()
-                                    
-                                    // Instructions
-                                    InstructionsView(recipe: recipe)
-                                    
-                                    // Nutrition Label
-                                    NutritionLabelView(recipeID: recipe.id, viewModel: viewModel)
-                                        .frame(height: 650)
+                                        // Ingredients
+                                        IngredientsView(recipe: recipe)
+                                        
+                                        Divider()
+                                        
+                                        // Instructions
+                                        InstructionsView(recipe: recipe)
+                                        
+                                        // Nutrition Label
+                                        NutritionLabelView(recipeID: recipe.id, viewModel: viewModel)
+                                            .frame(height: 650)
 
-                                    // Source Attribution
-                                    VStack(alignment: .leading, spacing: 4) {
-                                        Text("Source: \(recipe.sourceName)")
-                                            .font(.caption)
-                                            .foregroundColor(.secondary)
-                                        if let url = URL(string: recipe.sourceUrl) {
-                                            Link("View Original Recipe", destination: url)
+                                        // Source Attribution
+                                        VStack(alignment: .leading, spacing: 4) {
+                                            Text("Source: \(recipe.sourceName)")
                                                 .font(.caption)
+                                                .foregroundColor(.secondary)
+                                            if let url = URL(string: recipe.sourceUrl) {
+                                                Link("View Original Recipe", destination: url)
+                                                    .font(.caption)
+                                            }
                                         }
-                                    }
 
+                                    }
+                                    .padding(.horizontal, 30)
+                                    .padding(.vertical, 16)
+                                    .background(Color(.systemBackground))
                                 }
-                                .padding(.horizontal, 30)
-                                .padding(.vertical, 16)
-                                .background(Color(.systemBackground))
                             }
+                        case .error(let error):
+                            VStack {
+                                ErrorView(error: error, retryAction: {
+                                    Task {
+                                        await viewModel.getRecipeDetail(recipeId: recipeId)
+                                    }
+                                })
+                            }
+                            .frame(minHeight: UIScreen.main.bounds.height - 100)
+                        case .empty:
+                            EmptyView()
                         }
-                    case .error(let error):
-                        VStack {
-                            ErrorView(error: error, retryAction: {
-                                Task {
-                                    await viewModel.getRecipeDetail(recipeId: recipeId)
-                                }
-                            })
-                        }
-                        .frame(minHeight: UIScreen.main.bounds.height - 100)
-                    case .empty:
-                        EmptyView()
                     }
                 }
             }
+            .ignoresSafeArea(.container, edges: .top)
+            
+            // Fixed buttons overlay
+            HStack {
+                // Back button
+                Button(action: {
+                    dismiss()
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 16, weight: .semibold))
+                        Text("Back")
+                    }
+                    .foregroundColor(.white)
+                    .padding(12)
+                    .background(Color.black.opacity(0.6))
+                    .cornerRadius(20)
+                }
+                
+                Spacer()
+                
+                // Favorite button (only show when recipe is loaded)
+                if let recipe = viewModel.recipeDetails {
+                    Button(action: {
+                        favoritesVM.toggleFavorite(
+                            id: Int32(recipe.id),
+                            title: recipe.title,
+                            image: recipe.image
+                        )
+                    }) {
+                        Image(systemName: favoritesVM.isRecipeFavorited(id: Int32(recipe.id)) ? "heart.fill" : "heart")
+                            .font(.system(size: 20, weight: .semibold))
+                            .padding(12)
+                            .background(Color(.systemBackground))
+                            .foregroundColor(
+                                favoritesVM.isRecipeFavorited(id: Int32(recipe.id)) ? .red : .primary
+                            )
+                            .cornerRadius(12)
+                            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+                    }
+                }
+            }
+            .padding(.horizontal, 35)
         }
-        .ignoresSafeArea(.container, edges: .top)
         .navigationBarBackButtonHidden()
         .toolbarBackground(.hidden, for: .navigationBar)
         .task {
