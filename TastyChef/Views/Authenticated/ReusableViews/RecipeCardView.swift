@@ -27,7 +27,7 @@ struct RecipeCardView: View {
             
             VStack(alignment: .leading, spacing: 4) {
                 Text(recipe.title)
-                    .foregroundStyle(.black)
+                    .foregroundStyle(Color(.label))
                     .font(.headline)
                     .lineLimit(4)
                     .multilineTextAlignment(.leading)

@@ -36,7 +36,7 @@ struct SearchView: View {
                                 Button(action: { viewModel.addIngredient() }) {
                                     Image(systemName: "plus.circle.fill")
                                         .font(.title2)
-                                        .foregroundColor(.green)
+                                        .foregroundColor(Color("colorPrimary"))
                                 }
                                 .disabled(viewModel.newIngredient.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                             }
@@ -65,7 +65,7 @@ struct SearchView: View {
                                         .foregroundColor(.secondary)
                                     
                                     Slider(value: $viewModel.recipeCount, in: 1...15, step: 1)
-                                        .accentColor(.green)
+                                        .accentColor(Color("colorPrimary"))
                                 }
                                 
                                 // Ignore Pantry
@@ -74,7 +74,7 @@ struct SearchView: View {
                                         .font(.subheadline)
                                         .foregroundColor(.secondary)
                                 }
-                                .toggleStyle(SwitchToggleStyle(tint: .green))
+                                .toggleStyle(SwitchToggleStyle(tint: Color("colorPrimary")))
                             }
                             .padding()
                             .background(Color(.systemBackground))
@@ -98,7 +98,7 @@ struct SearchView: View {
                                 }
                                 .frame(maxWidth: .infinity)
                                 .padding()
-                                .background(viewModel.ingredients.isEmpty ? Color.gray : Color.green)
+                                .background(viewModel.ingredients.isEmpty ? Color.gray : Color("colorPrimary"))
                                 .foregroundColor(.white)
                                 .cornerRadius(12)
                             }
@@ -142,14 +142,14 @@ struct SearchView: View {
                                 }) {
                                     Label("Edit", systemImage: "slider.horizontal.3")
                                         .font(.subheadline)
-                                        .foregroundColor(.green)
+                                        .foregroundColor(Color("colorPrimary"))
                                 }
                                 .padding(8)
                                 .background(Color(.systemBackground))
                                 .cornerRadius(8)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 8)
-                                        .stroke(Color.green, lineWidth: 1)
+                                        .stroke(Color("colorPrimary"), lineWidth: 1)
                                 )
                             }
                         }
@@ -203,7 +203,7 @@ struct SearchView: View {
                             }
                             .padding(.vertical, 8)
                             .padding(.horizontal, 16)
-                            .background(Color.green)
+                            .background(Color("colorPrimary"))
                             .foregroundColor(.white)
                             .cornerRadius(8)
                             .padding(.top, 8)
@@ -220,7 +220,7 @@ struct SearchView: View {
                         VStack(spacing: 16) {
                             Image(systemName: "carrot")
                                 .font(.system(size: 50))
-                                .foregroundColor(.green.opacity(0.8))
+                                .foregroundColor(Color("colorPrimary").opacity(0.8))
                             
                             Text("Add ingredients to find recipes")
                                 .font(.headline)

@@ -18,8 +18,8 @@ struct HomeView: View {
                     // Search Bar
                     HStack {
                         Image(systemName: "magnifyingglass")
-                            .foregroundColor(.gray)
-                        
+                            .foregroundColor(.secondary)
+
                         TextField("Search recipes, ingredients, cuisine...", text: $vm.searchText)
                             .autocorrectionDisabled()
                             .autocapitalization(.none)
@@ -37,7 +37,7 @@ struct HomeView: View {
                         }
                     }
                     .padding()
-                    .background(Color(.white))
+                    .background(Color(.systemBackground))
                     .cornerRadius(12)
                     .padding(.horizontal)
                     
@@ -173,15 +173,16 @@ struct CategoriesView: View {
                                 Image(category.1)
                                     .resizable()
                                     .frame(width: 36, height: 36)
+                                    .foregroundStyle(Color("colorPrimary"))
                                     .scaledToFit()
                                 Text(category.0)
-                                    .foregroundStyle(.black)
+                                    .foregroundColor(Color(.label))
                                     .font(.subheadline)
                                     .fontWeight(.medium)
                             }
                         }
                         .frame(width: 100, height: 80)
-                        .background(.white)
+                        .background(Color(.systemBackground))
                         .cornerRadius(12)
                     }
                 }

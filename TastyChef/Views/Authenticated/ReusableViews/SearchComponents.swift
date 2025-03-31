@@ -51,7 +51,7 @@ struct IngredientSearchRecipeCard: View {
                     
                     Text("\(Int(recipe.matchPercentage))% match")
                         .font(.subheadline)
-                        .foregroundColor(.green)
+                        .foregroundColor(Color("colorPrimary"))
                         .fontWeight(.semibold)
                 }
                 
@@ -64,7 +64,7 @@ struct IngredientSearchRecipeCard: View {
                     IngredientCount(
                         count: recipe.usedIngredientCount,
                         label: "Ingredients you have",
-                        color: .green
+                        color: Color("colorPrimary")
                     )
                     
                     Spacer()
@@ -93,7 +93,7 @@ struct IngredientCount: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack(spacing: 6) {
-                Image(systemName: color == .green ? "checkmark.circle.fill" : "cart.fill")
+                Image(systemName: color == Color("colorPrimary") ? "checkmark.circle.fill" : "cart.fill")
                     .foregroundColor(color)
                     .font(.subheadline)
                 
@@ -123,7 +123,7 @@ struct ProgressBar: View {
                 
                 Rectangle()
                     .frame(width: min(geometry.size.width * value, geometry.size.width), height: geometry.size.height)
-                    .foregroundColor(.green)
+                    .foregroundColor(Color("colorPrimary"))
             }
             .cornerRadius(10)
             }

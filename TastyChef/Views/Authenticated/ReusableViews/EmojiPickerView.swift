@@ -32,11 +32,11 @@ struct EmojiPickerView: View {
                                 .padding(10)
                                 .background(
                                     Circle()
-                                        .fill(selectedEmoji == emoji ? Color.green.opacity(0.2) : Color.clear)
+                                        .fill(selectedEmoji == emoji ? Color("colorPrimary").opacity(0.2) : Color.clear)
                                 )
                                 .overlay(
                                     Circle()
-                                        .stroke(selectedEmoji == emoji ? Color.green : Color.clear, lineWidth: 2)
+                                        .stroke(selectedEmoji == emoji ? Color("colorPrimary") : Color.clear, lineWidth: 2)
                                 )
                         }
                     }

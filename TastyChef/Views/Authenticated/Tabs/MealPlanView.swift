@@ -108,7 +108,7 @@ struct MealPlanView: View {
                         }
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(viewModel.isFormValid ? Color.green : Color.gray)
+                        .background(viewModel.isFormValid ? Color("colorPrimary") : Color.gray)
                         .foregroundColor(.white)
                         .cornerRadius(12)
                         .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)

@@ -55,17 +55,17 @@ struct SettingsView: View {
                 
                 // Settings List
                 VStack(spacing: 0) {
-                    SettingsRowView(icon: "person.fill", iconColor: .green, title: "Account Settings")
+                    SettingsRowView(icon: "person.fill", iconColor: Color("colorPrimary"), title: "Account Settings")
                     
                     Divider()
                         .padding(.leading, 56)
                     
-                    SettingsRowView(icon: "bell.fill", iconColor: .green, title: "Notifications")
+                    SettingsRowView(icon: "bell.fill", iconColor: Color("colorPrimary"), title: "Notifications")
                     
                     Divider()
                         .padding(.leading, 56)
                     
-                    SettingsRowView(icon: "lock.fill", iconColor: .green, title: "Privacy")
+                    SettingsRowView(icon: "lock.fill", iconColor: Color("colorPrimary"), title: "Privacy")
                 }
                 .background(Color(.systemBackground))
                 
