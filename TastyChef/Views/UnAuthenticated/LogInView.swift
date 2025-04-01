@@ -97,4 +97,5 @@ struct LogInView: View {
 
 #Preview {
     LogInView()
+        .environmentObject(AuthenticationStateManager())
 }

@@ -178,4 +178,5 @@ struct SettingsRowView: View {
 
 #Preview {
     SettingsView()
+        .environmentObject(AuthenticationStateManager())
 }
