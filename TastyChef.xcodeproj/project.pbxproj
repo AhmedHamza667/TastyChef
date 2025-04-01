@@ -34,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		778900FB2D9863FC000F6AD4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		77A1A86D2D9C365B00807E14 /* TastyChef.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TastyChef.xctestplan; sourceTree = "<group>"; };
 		77E6146A2D91D8E2006AA4FD /* TastyChef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TastyChef.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77E6147A2D91D8E5006AA4FD /* TastyChefTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TastyChefTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		77E614842D91D8E5006AA4FD /* TastyChefUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TastyChefUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,6 +96,7 @@
 		77E614612D91D8E2006AA4FD = {
 			isa = PBXGroup;
 			children = (
+				77A1A86D2D9C365B00807E14 /* TastyChef.xctestplan */,
 				77E6146C2D91D8E2006AA4FD /* TastyChef */,
 				77E6147D2D91D8E5006AA4FD /* TastyChefTests */,
 				77E614872D91D8E5006AA4FD /* TastyChefUITests */,

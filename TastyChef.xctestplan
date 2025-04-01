@@ -1,0 +1,41 @@
+{
+  "configurations" : [
+    {
+      "id" : "9AC68FE3-A3D4-44A2-B1C7-E050527185AF",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:TastyChef.xcodeproj",
+      "identifier" : "77E614692D91D8E2006AA4FD",
+      "name" : "TastyChef"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "skippedTests" : [
+        "TastyChefTests"
+      ],
+      "target" : {
+        "containerPath" : "container:TastyChef.xcodeproj",
+        "identifier" : "77E614792D91D8E5006AA4FD",
+        "name" : "TastyChefTests"
+      }
+    },
+    {
+      "enabled" : false,
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:TastyChef.xcodeproj",
+        "identifier" : "77E614832D91D8E5006AA4FD",
+        "name" : "TastyChefUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

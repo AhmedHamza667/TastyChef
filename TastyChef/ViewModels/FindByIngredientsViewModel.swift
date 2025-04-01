@@ -66,8 +66,10 @@ class FindByIngredientsViewModel: ObservableObject {
             ignorePantry: ignorePantry
         )
         
-        // Hides until search completes
-        showInputSection = false
+        await MainActor.run {
+            // Hides until search completes
+            showInputSection = false
+        }
     }
 
     @MainActor

@@ -50,6 +50,5 @@ extension URLResponse{
             return false
         
         }
-        
     }
 }
