@@ -40,6 +40,11 @@
                BlueprintName = "TastyChefTests"
                ReferencedContainer = "container:TastyChef.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "TastyChefTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
          <TestableReference
             skipped = "YES"
