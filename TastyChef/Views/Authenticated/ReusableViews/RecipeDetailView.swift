@@ -13,7 +13,7 @@ struct RecipeDetailView: View {
     @StateObject private var viewModel = RecipeDetailViewModel(networkManager: NetworkManager())
     @Environment(\.dismiss) private var dismiss
     @StateObject private var favoritesVM = FavoritesViewModel(coreDataManager: CoreDataManager())
-
+    @State var showSafari: Bool = false
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -118,9 +118,19 @@ struct RecipeDetailView: View {
                                                 .font(.caption)
                                                 .foregroundColor(.secondary)
                                             if let url = URL(string: recipe.sourceUrl) {
-                                                Link("View Original Recipe", destination: url)
+                                                Text("View Original Recipe")
                                                     .font(.caption)
+                                                    .foregroundStyle(Color("colorPrimary"))
+                                                    .onTapGesture {
+                                                        showSafari.toggle()
+                                                    }
+                                                    .sheet(isPresented: $showSafari) {
+                                                                SafariView(url: url)
+                                                            }
                                             }
+                                            
+                                        
+
                                         }
 
                                     }
